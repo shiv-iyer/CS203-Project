@@ -1,0 +1,13 @@
+.title:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    border: 2px solid black;
+    padding: 4px;
+}
+
+.title2:hover {
+    transform: scale(0.85);
+    transition: all 0.3s ease;
+    border: 2px solid red;
+    padding: 4px;
+}
