@@ -21,7 +21,7 @@ export default class Main extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Container>
+                <Container className="main-cont">
                     <Row>
                         <Col>
                             <h1 className="title">hi.</h1>
