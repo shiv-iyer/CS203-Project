@@ -27,7 +27,7 @@ function App() {
     <React.Fragment>
       <Router>
         <Container>
-          <Navbar>
+          <Navbar expand="md">
             {/* Navbar.Brand is the main and home element in our navbar */}
             <Navbar.Brand href="#">
               <img
