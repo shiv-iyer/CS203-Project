@@ -1,5 +1,4 @@
 import React from "react";
-//import logo from './logo.svg';
 import logo from "./logo.png";
 import "./App.css";
 
@@ -31,6 +30,12 @@ function App() {
           <Navbar>
             {/* Navbar.Brand is the main and home element in our navbar */}
             <Navbar.Brand href="#">
+              <img
+                src={logo}
+                width="30"
+                height="30"
+                className="d-inline-block align-top">
+              </img>
               K2MU
             </Navbar.Brand>
             {/* Navbar.Toggle creates our 'hamburger menu', controls the collapsible Navbar */}
@@ -43,14 +48,6 @@ function App() {
             </Navbar.Collapse>
           </Navbar>
           <Main/>
-          {/* <div className="App">
-            <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <p>
-                Knight 2 Meet U
-              </p>
-            </header>
-          </div> */}
         </Container>
         {/* The routes are the areas in which all our pages will be displayed. They match URLs to React components. */}
         <Routes>
