@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Navbar, Nav, Container} from "react-bootstrap";
 
 // react-router-dom for routing pages; we import BrowserRouter but we name it 'Router'
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, NavLink } from "react-router-dom";
 
 // import Main
 import Main from "./Main";
@@ -42,8 +42,9 @@ function App() {
             <Navbar.Toggle aria-controls="home-navbar" />
             <Navbar.Collapse id="home-navbar">
               <Nav>
-                <Link className="nav-link" to="/">Home</Link>
-                <Link className="nav-link" to="/test">Testing</Link>
+                <NavLink className="nav-link" activeClassName="active" to="/">Home</NavLink>
+                <NavLink className="nav-link" activeClassName="active" to="/tournaments">Tournaments</NavLink>
+                <NavLink className="nav-link" activeClassName="active" to="/test">Testing</NavLink>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -53,6 +54,8 @@ function App() {
         <Routes>
           {/* Home / landing page route */}
           <Route path="/" element={<Home/>}></Route>
+          {/* Tournaments page */}
+          <Route path="/tournaments"></Route>
           {/* For my testing purposes */}
           <Route path="/test" element={<Testing/>}></Route>
         </Routes>

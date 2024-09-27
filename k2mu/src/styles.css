@@ -1,9 +1,30 @@
+.main-header {
+    text-align: center;
+}
+
+.main-header:hover {
+    transform: scale(1.07);
+    transition: all 0.3s ease;
+}
+
 .nav-link {
     color: #000000;
+    margin-right: 5px;
+}
+
+.nav-link:last-child {
+    margin-right: 0;
 }
 
 .nav-link:hover {
-    border: 2xp rounded blue;
+    border: 2px rounded blue;
+}
+
+.active {
+    background: #D6B4FC;
+    border-radius: 10px;
+    border: 2px solid gray;
+    font-weight: bold;
 }
 
 .main-cont {
