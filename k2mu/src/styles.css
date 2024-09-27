@@ -5,6 +5,7 @@
 .main-header:hover {
     transform: scale(1.07);
     transition: all 0.3s ease;
+    text-decoration: underline;
 }
 
 .nav-link {
@@ -28,7 +29,13 @@
 }
 
 .main-cont {
+    background: #D6B4FC;
+    border: 2px solid black;
     padding: 12px;
+}
+
+.row {
+    padding: 10px;
 }
 
 .title:hover {
@@ -42,5 +49,12 @@
     transform: scale(0.85);
     transition: all 0.3s ease;
     border: 2px solid red;
+    padding: 4px;
+}
+
+.smaller-title:hover {
+    transform: scale(1.03);
+    transition: all 0.3s ease;
+    border: 2px solid black;
     padding: 4px;
 }

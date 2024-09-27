@@ -15,7 +15,7 @@ export default function Home() {
                         <header className="App-header">
                             <img src={logo} className="App-logo" alt="logo" />
                             <p>Knight 2 Meet U</p>
-                            <p>Your greatest tool for...</p>
+                            <p>Your favorite tournament management system that provides a seamless experience for players and admins to participate in and organize tournaments.</p>
                         </header>
                     </div>}
                 </div>

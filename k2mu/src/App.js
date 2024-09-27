@@ -17,6 +17,7 @@ import Main from "./Main";
 // my own pages and components
 import Home from "./pages/Home";
 import Testing from "./pages/Testing";
+import Tournaments from "./pages/Tournaments";
 
 // stylesheet
 import "./styles.css";
@@ -55,7 +56,7 @@ function App() {
           {/* Home / landing page route */}
           <Route path="/" element={<Home/>}></Route>
           {/* Tournaments page */}
-          <Route path="/tournaments"></Route>
+          <Route path="/tournaments" element={<Tournaments/>}></Route>
           {/* For my testing purposes */}
           <Route path="/test" element={<Testing/>}></Route>
         </Routes>
