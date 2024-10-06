@@ -2,6 +2,12 @@ import React, {useState} from "react";
 
 import {Container, Button, ListGroup, Modal} from "react-bootstrap";
 
+// import styles
+import "../styles.css";
+
+// tournaments header image
+import pieces from "../resources/pieces-tour.jpg";
+
 export default function Tournaments () {
 
     // we will use the state to represent tournaments
@@ -49,10 +55,16 @@ export default function Tournaments () {
 
     return (
         <React.Fragment>
-            <Container>
-                <h1>Tournaments</h1>
-                <Button onClick={handleShowTournaments}>View Available Tournaments</Button>
-                <Button variant="info" onClick={handleShowUserTournaments}>My Current Tournaments</Button>
+            <Container className="page-primary">
+                <h1 className="main-header">Tournaments</h1>
+
+                {/* hero image to look cool */}
+                <img src={pieces} className="hero-img"></img>
+
+                <div className="button-group">
+                    <Button onClick={handleShowTournaments}>View Available Tournaments</Button>
+                    <Button variant="info" onClick={handleShowUserTournaments}>My Current Tournaments</Button>
+                </div>
 
                 {/* Modal will display our tournaments */}
                 <Modal show={showTournaments} onHide={handleClose}>

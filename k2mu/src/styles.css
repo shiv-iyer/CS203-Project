@@ -58,3 +58,33 @@
     border: 2px solid black;
     padding: 4px;
 }
+
+.page-primary {
+    background-color: #F8EEEC;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+/* take up a certain width of the container, with a max width for prevention.
+*  border-radius and box shadow to look cooler */
+.hero-img {
+    width: 80%;
+    max-width: 600px;
+    height: auto;            
+    display: block;       
+    margin: 20px auto;
+    border-radius: 10px;       
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ofc I'm gonna make it scale */
+.hero-img:hover {
+    transform: scale(1.04);
+    transition: all 0.3s ease;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
