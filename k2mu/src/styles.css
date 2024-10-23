@@ -90,3 +90,9 @@
     justify-content: center;
     padding: 10px;
 }
+
+.login-form {
+    padding: 12px;
+    background-color: #eeeeee;
+    border: 10px ridge #FFC6AC;
+}
