@@ -91,8 +91,20 @@
     padding: 10px;
 }
 
-.login-form {
+.user-form {
     padding: 12px;
     background-color: #eeeeee;
     border: 10px ridge #FFC6AC;
+}
+
+.main-text {
+    font-family: "Exo 2", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.sub-header {
+    font-family: "Agdasima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
