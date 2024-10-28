@@ -25,6 +25,41 @@ export default function Tournaments() {
         }
     };
 
+    const handlePostTournament = async () => {
+        const tournamentData = {
+            "name": "Reiwen Tournament",
+            "tournamentStatus": "Registration",
+            "tournamentStyle": "random",
+            "maxPlayers": 16,
+            "minPlayers": 4,
+            "minElo": 1000,
+            "maxElo": 3500,
+            "registrationCutOff": "2024-10-30T23:59:59"
+        };
+
+        // Basic Auth credentials
+        const username = 'Player1';
+        const password = 'Password1';
+        const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
+
+
+        try {
+            const response = await axios.post('http://localhost:8080/tournaments', tournamentData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
+                }
+            });
+
+            alert("Tournament created successfully!");
+            console.log('Response:', response.data);
+        } catch (error) {
+            // handle error in posting
+            console.error("Error creating tournament:", error);
+            alert("Error creating tournament!");
+        }
+    }
+
     const handleShowTournaments = () => {
         setShowTournaments(true);
         fetchTournaments();  // Fetch tournaments when button is clicked
@@ -53,6 +88,7 @@ export default function Tournaments() {
                 <div className="button-group">
                     <Button onClick={handleShowTournaments}>View Available Tournaments</Button>
                     <Button variant="info" onClick={handleShowUserTournaments}>My Current Tournaments</Button>
+                    <Button variant="success" onClick={handlePostTournament}>Create Tournament</Button>
                 </div>
 
                 {/* Modal will display our tournaments */}
