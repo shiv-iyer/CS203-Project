@@ -61,6 +61,32 @@ export default function Tournaments() {
         }
     }
 
+    const handlePostTournamentt = async () => {
+        alert("new");
+    }
+
+    const handleDeleteTournament = async () => {
+
+        // Basic Auth credentials
+        const username = 'Player1';
+        const password = 'Password1';
+        const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
+
+
+        try {
+            const response = await axios.delete('http://localhost:8080/tournaments/9', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
+                }
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error("Error deleteing tournament:", error);
+            alert("Error deleting tournament!");
+        }
+    }
+
     const handleShowTournaments = () => {
         setShowTournaments(true);
         fetchTournaments();  // Fetch tournaments when button is clicked
@@ -89,7 +115,8 @@ export default function Tournaments() {
                 <div className="button-group">
                     <Button onClick={handleShowTournaments}>View Available Tournaments</Button>
                     <Button variant="info" onClick={handleShowUserTournaments}>My Current Tournaments</Button>
-                    <Button variant="success" onClick={handlePostTournament}>Create Tournament</Button>
+                    <Button variant="success" onClick={handlePostTournamentt}>Create Tournament</Button>
+                    <Button variant="danger" onClick={handleDeleteTournament}>Delete Tournament</Button>
                 </div>
 
                 {/* Modal will display our tournaments */}
