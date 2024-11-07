@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Container, Button, ListGroup, Modal } from "react-bootstrap";
+import { Card, Container, Button, ListGroup, Modal, Form } from "react-bootstrap";
 import axios from 'axios';
 
 // import styles
@@ -11,9 +11,20 @@ import knightIcon from "../resources/dark-knight.png";
 
 export default function Tournaments() {
     const [showTournaments, setShowTournaments] = useState(false);
+    const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUserTournaments, setShowUserTournaments] = useState(false);
     const [tournaments, setTournaments] = useState([]);  // Store fetched tournaments
     const [error, setError] = useState(null); // Store any error that may occur during the fetch
+
+    // store details and information for creation of tournament
+    const [name, setName] = useState("");
+    const [tournamentStatus, setTournamentStatus] = useState("Registration");
+    const [tournamentStyle, setTournamentStyle] = useState("Random");
+    const [maxPlayers, setMaxPlayers] = useState(16);
+    const [minPlayers, setMinPlayers] = useState(4);
+    const [minElo, setMinElo] = useState(1000);
+    const [maxElo, setMaxElo] = useState(3500);
+    const [registrationCutOff, setRegistrationCutOff] = useState("");
     
     const fetchTournaments = async () => {
         try {
@@ -61,8 +72,36 @@ export default function Tournaments() {
         }
     }
 
-    const handlePostTournamentt = async () => {
-        alert("new");
+    const handleCreateTournament = async () => {
+        const tournamentData = {
+            name,
+            tournamentStatus,
+            tournamentStyle,
+            maxPlayers,
+            minPlayers,
+            minElo,
+            maxElo,
+            registrationCutOff
+        };
+
+        const username = 'Player1';
+        const password = 'Password1';
+        const encodedCredentials = btoa(`${username}:${password}`);
+
+        try {
+            const response = await axios.post('http://localhost:8080/tournaments', tournamentData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
+                }
+            });
+            alert("Tournament created successfully!");
+            setShowCreateModal(false);
+            fetchTournaments();
+        } catch (error) {
+            console.error("Error creating tournament:", error);
+            alert("Error creating tournament!");
+        }
     }
 
     const handleDeleteTournament = async () => {
@@ -115,7 +154,7 @@ export default function Tournaments() {
                 <div className="button-group">
                     <Button onClick={handleShowTournaments}>View Available Tournaments</Button>
                     <Button variant="info" onClick={handleShowUserTournaments}>My Current Tournaments</Button>
-                    <Button variant="success" onClick={handlePostTournamentt}>Create Tournament</Button>
+                    <Button variant="success" onClick={() => setShowCreateModal(true)}>Create Tournament</Button>
                     <Button variant="danger" onClick={handleDeleteTournament}>Delete Tournament</Button>
                 </div>
 
@@ -177,6 +216,72 @@ export default function Tournaments() {
                         <Button variant="secondary" onClick={handleUserClose}>
                             Close
                         </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Now for creating Tournaments */}
+                <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Create Tournament</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group>
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Status</Form.Label>
+                                <Form.Control as="select" value={tournamentStatus} onChange={(e) => setTournamentStatus(e.target.value)}>
+                                    <option>Registration</option>
+                                    <option>Ongoing</option>
+                                    <option>Completed</option>
+                                </Form.Control>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Style</Form.Label>
+                                <Form.Control as="select" value={tournamentStyle} onChange={(e) => setTournamentStyle(e.target.value)}>
+                                    <option>Random</option>
+                                    <option>Round Robin</option>
+                                    <option>Single Elimination</option>
+                                </Form.Control>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Max Players</Form.Label>
+                                <Form.Control type="range" min="4" max="100" value={maxPlayers} onChange={(e) => setMaxPlayers(e.target.value)} />
+                                <Form.Text>{maxPlayers}</Form.Text>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Min Players</Form.Label>
+                                <Form.Control type="range" min="4" max="100" value={minPlayers} onChange={(e) => setMinPlayers(e.target.value)} />
+                                <Form.Text>{minPlayers}</Form.Text>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Min Elo</Form.Label>
+                                <Form.Control type="range" min="500" max="4000" value={minElo} onChange={(e) => setMinElo(e.target.value)} />
+                                <Form.Text>{minElo}</Form.Text>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Max Elo</Form.Label>
+                                <Form.Control type="range" min="500" max="4000" value={maxElo} onChange={(e) => setMaxElo(e.target.value)} />
+                                <Form.Text>{maxElo}</Form.Text>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Registration Cutoff</Form.Label>
+                                <Form.Control type="date" value={registrationCutOff} onChange={(e) => setRegistrationCutOff(e.target.value)} />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Close</Button>
+                        <Button variant="primary" onClick={handleCreateTournament}>Create Tournament</Button>
                     </Modal.Footer>
                 </Modal>
             </Container>
