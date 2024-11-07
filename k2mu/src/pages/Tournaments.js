@@ -73,6 +73,8 @@ export default function Tournaments() {
     }
 
     const handleCreateTournament = async () => {
+        const formattedRegistrationCutOff = registrationCutOff ? `${registrationCutOff}T23:59:59` : "";
+
         const tournamentData = {
             name,
             tournamentStatus,
@@ -81,7 +83,7 @@ export default function Tournaments() {
             minPlayers,
             minElo,
             maxElo,
-            registrationCutOff
+            registrationCutOff: formattedRegistrationCutOff
         };
 
         const username = 'Player1';
@@ -250,16 +252,17 @@ export default function Tournaments() {
                             </Form.Group>
 
                             <Form.Group>
+                                <Form.Label>Min Players</Form.Label>
+                                <Form.Control type="range" min="4" max="100" value={minPlayers} onChange={(e) => setMinPlayers(e.target.value)} />
+                                <Form.Text>{minPlayers}</Form.Text>
+                            </Form.Group>
+
+                            <Form.Group>
                                 <Form.Label>Max Players</Form.Label>
                                 <Form.Control type="range" min="4" max="100" value={maxPlayers} onChange={(e) => setMaxPlayers(e.target.value)} />
                                 <Form.Text>{maxPlayers}</Form.Text>
                             </Form.Group>
 
-                            <Form.Group>
-                                <Form.Label>Min Players</Form.Label>
-                                <Form.Control type="range" min="4" max="100" value={minPlayers} onChange={(e) => setMinPlayers(e.target.value)} />
-                                <Form.Text>{minPlayers}</Form.Text>
-                            </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Min Elo</Form.Label>
