@@ -100,6 +100,17 @@ export default function Tournaments() {
             alert("Tournament created successfully!");
             setShowCreateModal(false);
             fetchTournaments();
+
+            // clear form fields
+            setShowCreateModal(false);
+            setName("");
+            setTournamentStatus("Registration");
+            setTournamentStyle("Random");
+            setMaxPlayers(16);
+            setMinPlayers(4);
+            setMinElo(1000);
+            setMaxElo(3500);
+            setRegistrationCutOff("");
         } catch (error) {
             console.error("Error creating tournament:", error);
             alert("Error creating tournament!");
@@ -115,7 +126,7 @@ export default function Tournaments() {
 
 
         try {
-            const response = await axios.delete('http://localhost:8080/tournaments/9', {
+            const response = await axios.delete('http://localhost:8080/tournaments/11', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Basic ${encodedCredentials}`
@@ -123,7 +134,7 @@ export default function Tournaments() {
             });
             console.log(response.data);
         } catch (error) {
-            console.error("Error deleteing tournament:", error);
+            console.error("Error deleting tournament:", error);
             alert("Error deleting tournament!");
         }
     }
