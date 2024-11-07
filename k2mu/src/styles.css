@@ -114,7 +114,8 @@
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative; /* Necessary for absolute positioning of icon */
+    /* Relative for absolute positioning of chess icon relative to card */
+    position: relative;
     padding-top: 10px;
 }
 
@@ -122,21 +123,102 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 24px; /* Adjust the size of the icon as needed */
+    /* Adjust the size of the icon */
+    width: 24px;
     height: 24px;
-    opacity: 0.8; /* Slight transparency for styling */
+    /* Slight transparency to look cleaner */
+    opacity: 0.85;
 }
 
 .tournament-title {
+    /* Title sizing with dark color */
     font-weight: bold;
-    font-size: 1.5rem; /* Title size */
-    color: #333; /* Dark color for text */
+    font-size: 1.5rem;
+    color: #333;
 }
 
 .divider {
+    /* Divide with a dark theme for chess theme*/
     border: none;
-    height: 1px; /* Divider height */
-    background-color: #000; /* Black color for divider */
-    margin: 10px 0; /* Margin around the divider */
+    height: 1px;
+    background-color: #000;
+    margin: 10px 0; 
 }
 
+/* Style for the Create Tournament Modal */
+.create-tournament-modal .modal-content {
+    /* black border and light gray background: keep the bw chess theme */
+    border: 2px solid #000;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.create-tournament-modal .modal-header {
+    /* dark background for the top header, white text contrasts */
+    background-color: #333;
+    color: #fff;
+    border-bottom: 2px solid #000;
+}
+
+.create-tournament-modal .modal-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.create-tournament-modal .form-group {
+    margin-bottom: 1rem;
+}
+
+.create-tournament-modal .form-label {
+    /* dark text for labels */
+    font-weight: bold;
+    color: #333;
+}
+
+.create-tournament-modal .form-control {
+    /* black border instead of default */
+    border: 1px solid #000;
+    border-radius: 4px;
+}
+
+.create-tournament-modal .form-text {
+    /* gray helper form text */
+    color: #666;
+}
+
+.create-tournament-modal .range-value {
+    font-weight: bold;
+    color: #333;
+}
+
+.create-tournament-modal .modal-footer {
+    border-top: 2px solid #000;
+}
+
+.create-tournament-modal .btn-primary {
+    /* dark color for primary button */
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+}
+
+.basic-modal .btn-primary {
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+}
+
+.create-tournament-modal .btn-secondary {
+    /* light gray for secondary button */
+    background-color: #f5f5f5;
+    border: 1px solid #333;
+    color: #333;
+}
+
+.basic-modal .btn-secondary {
+    /* light gray for secondary button */
+    background-color: #f5f5f5;
+    border: 1px solid #333;
+    color: #333;
+}

@@ -159,7 +159,7 @@ export default function Tournaments() {
                 </div>
 
                 {/* Modal will display our tournaments */}
-                <Modal show={showTournaments} onHide={handleClose}>
+                <Modal show={showTournaments} onHide={handleClose} className="basic-modal">
                     <Modal.Header>
                         <Modal.Title>Available Tournaments</Modal.Title>
                     </Modal.Header>
@@ -201,7 +201,7 @@ export default function Tournaments() {
                 </Modal>
 
                 {/* The same thing but for user tournaments */}
-                <Modal show={showUserTournaments} onHide={handleUserClose}>
+                <Modal show={showUserTournaments} onHide={handleUserClose} className="basic-modal">
                     <Modal.Header>
                         <Modal.Title>My Tournaments</Modal.Title>
                     </Modal.Header>
@@ -220,7 +220,7 @@ export default function Tournaments() {
                 </Modal>
 
                 {/* Now for creating Tournaments */}
-                <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+                <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} className="create-tournament-modal">
                     <Modal.Header closeButton>
                         <Modal.Title>Create Tournament</Modal.Title>
                     </Modal.Header>
