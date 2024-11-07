@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, ListGroup, Modal } from "react-bootstrap";
+import { Card, Container, Button, ListGroup, Modal } from "react-bootstrap";
 import axios from 'axios';
 
 // import styles
@@ -7,6 +7,7 @@ import "../styles.css";
 
 // tournaments header image
 import pieces from "../resources/pieces-tour.jpg";
+import knightIcon from "../resources/dark-knight.png";
 
 export default function Tournaments() {
     const [showTournaments, setShowTournaments] = useState(false);
@@ -99,13 +100,31 @@ export default function Tournaments() {
                     <Modal.Body style={{maxHeight: "400px", overflowY: "scroll"}}>
                         {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error if any */}
                         <ListGroup>
-                            {tournaments.length > 0 ? (
-                                tournaments.map((tournament, index) => (
-                                    <ListGroup.Item key={index}>{tournament.name}</ListGroup.Item>  // Display tournament name
-                                ))
-                            ) : (
-                                <p>No tournaments available</p>
-                            )}
+                        {tournaments.length > 0 ? (
+                            tournaments.map((tournament) => (
+                                <Card key={tournament.tournamentId} className="mb-3 tournament-card">
+                                    <Card.Body>
+                                        {/* Chess piece icon in the top right to look cooler */}
+                                        <img src={knightIcon} alt="Chess Knight Icon" className="chess-icon" />
+                                        <Card.Title className="tournament-title">{tournament.name}</Card.Title>
+                                        <hr className="divider" />
+                                        <Card.Subtitle className="mb-2 text-muted">Status: {tournament.tournamentStatus}</Card.Subtitle>
+                                        <Card.Text>
+                                            <strong>Style:</strong> {tournament.tournamentStyle} <br />
+                                            <strong>Max Players:</strong> {tournament.maxPlayers} <br />
+                                            <strong>Min Players:</strong> {tournament.minPlayers} <br />
+                                            <strong>Min Elo:</strong> {tournament.minElo} <br />
+                                            <strong>Max Elo:</strong> {tournament.maxElo} <br />
+                                            <strong>Registration Cutoff:</strong> {new Date(tournament.registrationCutOff).toLocaleString()} <br />
+                                            <strong>Registered Players:</strong> {tournament.registeredPlayersId.length} <br />
+                                            <strong>Rankings:</strong> {tournament.rankings ? tournament.rankings.join(', ') : 'N/A'}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            ))
+                        ) : (
+                            <p>No tournaments available</p>
+                        )}
                         </ListGroup>
                     </Modal.Body>
                     <Modal.Footer>
