@@ -13,6 +13,7 @@ export default function Tournaments() {
     const [showTournaments, setShowTournaments] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUserTournaments, setShowUserTournaments] = useState(false);
+    const [showDeleteTournaments, setShowDeleteTournaments] = useState(false);
     const [tournaments, setTournaments] = useState([]);  // Store fetched tournaments
     const [error, setError] = useState(null); // Store any error that may occur during the fetch
 
@@ -119,24 +120,25 @@ export default function Tournaments() {
 
     const handleDeleteTournament = async () => {
 
+        setShowDeleteTournaments(true);
         // Basic Auth credentials
-        const username = 'Player1';
-        const password = 'Password1';
-        const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
+        // const username = 'Player1';
+        // const password = 'Password1';
+        // const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
 
 
-        try {
-            const response = await axios.delete('http://localhost:8080/tournaments/11', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Basic ${encodedCredentials}`
-                }
-            });
-            console.log(response.data);
-        } catch (error) {
-            console.error("Error deleting tournament:", error);
-            alert("Error deleting tournament!");
-        }
+        // try {
+        //     const response = await axios.delete('http://localhost:8080/tournaments/11', {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `Basic ${encodedCredentials}`
+        //         }
+        //     });
+        //     console.log(response.data);
+        // } catch (error) {
+        //     console.error("Error deleting tournament:", error);
+        //     alert("Error deleting tournament!");
+        // }
     }
 
     const handleShowTournaments = () => {
@@ -154,6 +156,10 @@ export default function Tournaments() {
 
     const handleUserClose = () => {
         setShowUserTournaments(false);
+    };
+
+    const handleDeleteClose = () => {
+        setShowDeleteTournaments(false);
     };
 
     return (
@@ -296,6 +302,48 @@ export default function Tournaments() {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Close</Button>
                         <Button variant="primary" onClick={handleCreateTournament}>Create Tournament</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Lastly, deleting tournaments*/}
+                <Modal show={showDeleteTournaments} onHide={handleDeleteClose} className="basic-modal">
+                    <Modal.Header>
+                        <Modal.Title>Available Tournaments</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body style={{maxHeight: "400px", overflowY: "scroll"}}>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error if any */}
+                        <ListGroup>
+                        {tournaments.length > 0 ? (
+                            tournaments.map((tournament) => (
+                                <Card key={tournament.tournamentId} className="mb-3 tournament-card">
+                                    <Card.Body>
+                                        {/* Chess piece icon in the top right to look cooler */}
+                                        <img src={knightIcon} alt="Chess Knight Icon" className="chess-icon" />
+                                        <Card.Title className="tournament-title">{tournament.name}</Card.Title>
+                                        <hr className="divider" />
+                                        <Card.Subtitle className="mb-2 text-muted">Status: {tournament.tournamentStatus}</Card.Subtitle>
+                                        <Card.Text>
+                                            <strong>Style:</strong> {tournament.tournamentStyle} <br />
+                                            <strong>Max Players:</strong> {tournament.maxPlayers} <br />
+                                            <strong>Min Players:</strong> {tournament.minPlayers} <br />
+                                            <strong>Min Elo:</strong> {tournament.minElo} <br />
+                                            <strong>Max Elo:</strong> {tournament.maxElo} <br />
+                                            <strong>Registration Cutoff:</strong> {new Date(tournament.registrationCutOff).toLocaleString()} <br />
+                                            <strong>Registered Players:</strong> {tournament.registeredPlayersId.length} <br />
+                                            <strong>Rankings:</strong> {tournament.rankings ? tournament.rankings.join(', ') : 'N/A'}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            ))
+                        ) : (
+                            <p>No tournaments available</p>
+                        )}
+                        </ListGroup>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </Container>
