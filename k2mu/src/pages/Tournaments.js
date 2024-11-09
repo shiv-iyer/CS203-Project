@@ -341,7 +341,7 @@ export default function Tournaments() {
                         </ListGroup>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button variant="secondary" onClick={handleDeleteClose}>
                             Close
                         </Button>
                     </Modal.Footer>
