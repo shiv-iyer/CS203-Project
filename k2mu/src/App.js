@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./logo.png";
 import "./App.css";
+import Chatbot from "./components/Chatbot";
 
 // bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -65,6 +66,7 @@ function App() {
           <Route path="/test" element={<Testing/>}></Route>
         </Routes>
       </Router>
+      <Chatbot />
     </React.Fragment>
   );
 }
