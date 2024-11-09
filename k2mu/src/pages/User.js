@@ -29,6 +29,7 @@ export default function User() {
             const playerData = {
                 "username": "Player6",
                 "password": "Password6",
+                "email": "chooyangh@gmail.com",
                 "authorities": "ROLE_ADMIN",
                 "globalEloRating": 2666
             };
@@ -46,7 +47,30 @@ export default function User() {
             console.error("Error creating player:", error);
             alert("Error creating player!");
         }
+    }
+
+    const deleteUser = async () => {
+        try {
+
+            const username = 'Player6';
+            const password = 'Password6';
+            const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
+
+            const response = await axios.delete('http://localhost:8080/players/Player6', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Basic ${encodedCredentials}`
+                    }
+            });
+    
+            alert("Player deleted successfully!");
+            console.log('Response:', response.data);
+        } catch (error) {
+            // handle error in posting
+            console.error("Error deleting player:", error);
+            alert("Error deleting player!");
         }
+    }
 
     return (
         <React.Fragment>
@@ -122,6 +146,7 @@ export default function User() {
                                 </Form.Group>
 
                                 <Button variant="primary" onClick={registerUser}>Register</Button>
+                                <Button variant="danger" onClick={deleteUser}>Delete</Button>
                             </Form>
                         </div>
                     )}
