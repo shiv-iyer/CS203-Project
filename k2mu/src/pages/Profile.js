@@ -43,7 +43,7 @@ export default function Profile() {
 
     const getUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/players');
+            const response = await axios.get(IP_ADDRESS + '/players');
             console.log("All players:");
             console.log(response.data);
         } catch (error) {

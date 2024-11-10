@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, Button, Nav } from "react-bootstrap";
 import "../styles.css";
 import axios from 'axios';
+import { IP_ADDRESS } from '../config';
 
 export default function User() {
     // State to track which form (Login/Register) is active
@@ -32,7 +33,7 @@ export default function User() {
 
     const viewUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/players');
+            const response = await axios.get(IP_ADDRESS + '/players');
             console.log("All players:");
             console.log(response.data);
         } catch (error) {
@@ -55,7 +56,7 @@ export default function User() {
                 "globalEloRating": 2666
             };
 
-            const response = await axios.post('http://localhost:8080/players', playerData, {
+            const response = await axios.post(IP_ADDRESS + '/players', playerData, {
                     headers: {
                         'Content-Type': 'application/json',
                     }
@@ -87,7 +88,7 @@ export default function User() {
             const password = '12345678';
             const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
 
-            const response = await axios.delete('http://localhost:8080/players/YangHwee69', {
+            const response = await axios.delete(IP_ADDRESS + '/players/YangHwee69', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Basic ${encodedCredentials}`

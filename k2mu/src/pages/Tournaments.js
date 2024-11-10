@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Container, Button, ListGroup, Modal, Form } from "react-bootstrap";
 import axios from 'axios';
+import { IP_ADDRESS } from '../config';
 
 // import styles
 import "../styles.css";
@@ -36,7 +37,7 @@ export default function Tournaments() {
     
     const fetchTournaments = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/tournaments');  // API URL for fetching tournaments
+            const response = await axios.get(IP_ADDRESS + '/tournaments');  // API URL for fetching tournaments
             setTournaments(response.data);  // Set the fetched tournaments
             console.log(response.data);
         } catch (error) {
@@ -96,7 +97,7 @@ export default function Tournaments() {
         // const encodedCredentials = btoa(`${username}:${password}`);
 
         try {
-            const response = await axios.post('http://localhost:8080/tournaments', tournamentData, {
+            const response = await axios.post(IP_ADDRESS + '/tournaments', tournamentData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Basic ${encodedCredentials}`
@@ -132,7 +133,7 @@ export default function Tournaments() {
 
 
         // try {
-        //     const response = await axios.delete('http://localhost:8080/tournaments/11', {
+        //     const response = await axios.delete(IP_ADDRESS + '/tournaments/11', {
         //         headers: {
         //             'Content-Type': 'application/json',
         //             'Authorization': `Basic ${encodedCredentials}`
