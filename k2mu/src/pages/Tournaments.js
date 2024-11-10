@@ -38,41 +38,6 @@ export default function Tournaments() {
         }
     };
 
-    const handlePostTournament = async () => {
-        const tournamentData = {
-            "name": "Reiwen Tournament",
-            "tournamentStatus": "Registration",
-            "tournamentStyle": "random",
-            "maxPlayers": 16,
-            "minPlayers": 4,
-            "minElo": 1000,
-            "maxElo": 3500,
-            "registrationCutOff": "2024-10-30T23:59:59"
-        };
-
-        // Basic Auth credentials
-        const username = 'Player1';
-        const password = 'Password1';
-        const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
-
-
-        try {
-            const response = await axios.post('http://localhost:8080/tournaments', tournamentData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Basic ${encodedCredentials}`
-                }
-            });
-
-            alert("Tournament created successfully!");
-            console.log('Response:', response.data);
-        } catch (error) {
-            // handle error in posting
-            console.error("Error creating tournament:", error);
-            alert("Error creating tournament!");
-        }
-    }
-
     const handleCreateTournament = async () => {
         const formattedRegistrationCutOff = registrationCutOff ? `${registrationCutOff}T23:59:59` : "";
 
@@ -114,7 +79,7 @@ export default function Tournaments() {
             setRegistrationCutOff("");
         } catch (error) {
             console.error("Error creating tournament:", error);
-            alert("Error creating tournament!");
+            alert(`Error creating tournament! ${error.response.data.message}`);
         }
     }
 
@@ -162,6 +127,26 @@ export default function Tournaments() {
         setShowDeleteTournaments(false);
     };
 
+    const joinTournament = async (tournamentId) => {
+
+        const username = 'Player3';
+        const password = 'Password1@';
+        const encodedCredentials = btoa(`${username}:${password}`);
+
+        try {
+            const response = await axios.post(`http://localhost:8080/tournaments/${tournamentId}/players?playerId=3`, {}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
+                }
+            });
+            alert("Tournament joined successfully!");
+        } catch (error) {
+            console.error("Error joining tournament:", error);
+            alert("Error joining tournament!");
+        }
+    }
+
     return (
         <React.Fragment>
             <Container className="page-primary">
@@ -195,6 +180,7 @@ export default function Tournaments() {
                                         <hr className="divider" />
                                         <Card.Subtitle className="mb-2 text-muted">Status: {tournament.tournamentStatus}</Card.Subtitle>
                                         <Card.Text>
+                                            <strong>ID: </strong> {tournament.tournamentId} <br />
                                             <strong>Style:</strong> {tournament.tournamentStyle} <br />
                                             <strong>Max Players:</strong> {tournament.maxPlayers} <br />
                                             <strong>Min Players:</strong> {tournament.minPlayers} <br />
@@ -204,6 +190,7 @@ export default function Tournaments() {
                                             <strong>Registered Players:</strong> {tournament.registeredPlayersId.length} <br />
                                             <strong>Rankings:</strong> {tournament.rankings ? tournament.rankings.join(', ') : 'N/A'}
                                         </Card.Text>
+                                        <Button onClick={() => joinTournament(tournament.tournamentId)}>Join</Button>
                                     </Card.Body>
                                 </Card>
                             ))
