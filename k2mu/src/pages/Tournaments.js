@@ -88,7 +88,7 @@ export default function Tournaments() {
         };
 
         const username = 'Player1';
-        const password = 'Password1';
+        const password = 'Password1@';
         const encodedCredentials = btoa(`${username}:${password}`);
 
         try {
@@ -162,6 +162,10 @@ export default function Tournaments() {
         setShowDeleteTournaments(false);
     };
 
+    const manageTournament = (tournamentId) => {
+        alert("Tournament clicked: " + tournamentId);
+    }
+
     return (
         <React.Fragment>
             <Container className="page-primary">
@@ -188,13 +192,14 @@ export default function Tournaments() {
                         {tournaments.length > 0 ? (
                             tournaments.map((tournament) => (
                                 <Card key={tournament.tournamentId} className="mb-3 tournament-card">
-                                    <Card.Body>
+                                    <Card.Body onClick={() => manageTournament(tournament.tournamentId)}>
                                         {/* Chess piece icon in the top right to look cooler */}
                                         <img src={knightIcon} alt="Chess Knight Icon" className="chess-icon" />
                                         <Card.Title className="tournament-title">{tournament.name}</Card.Title>
                                         <hr className="divider" />
                                         <Card.Subtitle className="mb-2 text-muted">Status: {tournament.tournamentStatus}</Card.Subtitle>
                                         <Card.Text>
+                                            <strong>ID:</strong> {tournament.tournamentId} <br />
                                             <strong>Style:</strong> {tournament.tournamentStyle} <br />
                                             <strong>Max Players:</strong> {tournament.maxPlayers} <br />
                                             <strong>Min Players:</strong> {tournament.minPlayers} <br />
@@ -308,7 +313,7 @@ export default function Tournaments() {
                 {/* Lastly, deleting tournaments*/}
                 <Modal show={showDeleteTournaments} onHide={handleDeleteClose} className="basic-modal">
                     <Modal.Header>
-                        <Modal.Title>Available Tournaments</Modal.Title>
+                        <Modal.Title>Deleting Tournaments</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{maxHeight: "400px", overflowY: "scroll"}}>
                         {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error if any */}
@@ -323,6 +328,7 @@ export default function Tournaments() {
                                         <hr className="divider" />
                                         <Card.Subtitle className="mb-2 text-muted">Status: {tournament.tournamentStatus}</Card.Subtitle>
                                         <Card.Text>
+                                            <strong>ID:</strong> {tournament.tournamentId} <br />
                                             <strong>Style:</strong> {tournament.tournamentStyle} <br />
                                             <strong>Max Players:</strong> {tournament.maxPlayers} <br />
                                             <strong>Min Players:</strong> {tournament.minPlayers} <br />

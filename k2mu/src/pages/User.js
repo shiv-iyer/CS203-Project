@@ -83,11 +83,11 @@ export default function User() {
     const deleteUser = async () => {
         try {
 
-            const username = 'Player77';
-            const password = 'Password77';
+            const username = 'YangHwee69';
+            const password = '12345678';
             const encodedCredentials = btoa(`${username}:${password}`);  // Encode the credentials in Base64
 
-            const response = await axios.delete('http://localhost:8080/players/Player77', {
+            const response = await axios.delete('http://localhost:8080/players/YangHwee69', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Basic ${encodedCredentials}`
@@ -101,6 +101,10 @@ export default function User() {
             console.error("Error deleting player:", error);
             alert("Error deleting player!");
         }
+    }
+
+    const handleLogin = () => {
+        alert("Logged in successfully as Player77!");
     }
 
     return (
@@ -152,7 +156,7 @@ export default function User() {
                                     </Form.Text>
                                 </Form.Group>
 
-                                <Button variant="primary">Login</Button>
+                                <Button variant="primary" onClick={handleLogin}>Login</Button>
                                 <Button variant="success" onClick={viewUsers}>View All Users</Button>
                             </Form>
                         </div>
