@@ -9,8 +9,11 @@ import pieces from "../resources/pieces-tour.jpg";
 export default function Match() {
     const [tournamentId, setTournamentId] = useState("");
     const [matchId, setMatchId] = useState("");
+    const [isDraw, setIsDraw] = useState(false);
+    const [winnerId, setWinnerId] = useState("");
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showAssignModal, setShowAssignModal] = useState(false);
+    const [showProcessModal, setShowProcessModal] = useState(false);
 
     const createMatch = async () => {
         try {
@@ -34,10 +37,29 @@ export default function Match() {
         }
     };
 
+    const processMatch = async () => {
+        try {
+            const response = await axios.put(
+                `http://localhost:8080/tournament/${tournamentId}/matches/${matchId}/updateresults?isDraw=${isDraw}`,
+                isDraw ? {} : { id: winnerId }, // Only send `id` in the body if `isDraw` is false
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            alert("Match processed successfully!");
+            console.log(response.data);
+            setShowProcessModal(false);
+        } catch (error) {
+            console.error("Error processing match:", error);
+        }
+    };
+
     return (
         <Container className="page-primary text-center">
             <h1 className="main-header mb-4">Match</h1>
-            
+
             <div className="match-image-container" style={{
                 maxWidth: '400px',
                 margin: '0 auto 2rem',
@@ -81,6 +103,18 @@ export default function Match() {
                     }}
                 >
                     Assign Match
+                </Button>
+                <Button
+                    onClick={() => setShowProcessModal(true)} // Opens the modal when clicked
+                    style={{
+                        backgroundColor: '#e74c3c',
+                        border: 'none',
+                        padding: '0.75rem 1.5rem',
+                        borderRadius: '4px',
+                        fontWeight: '500'
+                    }}
+                >
+                    Process Match
                 </Button>
             </div>
 
@@ -167,6 +201,77 @@ export default function Match() {
                             }}
                         >
                             Assign Players
+                        </Button>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={showProcessModal}
+                onHide={() => setShowProcessModal(false)}
+                centered
+                contentClassName="bg-dark"
+            >
+                <Modal.Header 
+                    closeButton 
+                    className="border-0"
+                    style={{ backgroundColor: '#2c3e50', color: 'white' }}
+                >
+                    <Modal.Title>Process Match</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ backgroundColor: '#2c3e50', color: 'white' }}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Enter the tournament ID:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter Tournament ID"
+                            value={tournamentId}
+                            onChange={(e) => setTournamentId(e.target.value)}
+                            className="bg-dark text-white border-secondary"
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Enter the match ID:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter Match ID"
+                            value={matchId}
+                            onChange={(e) => setMatchId(e.target.value)}
+                            className="bg-dark text-white border-secondary"
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3 d-flex align-items-center">
+                        <Form.Check 
+                            type="checkbox" 
+                            label="Is Draw?" 
+                            checked={isDraw} 
+                            onChange={(e) => setIsDraw(e.target.checked)} 
+                            style={{ marginRight: '10px' }}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Winner ID (if not a draw):</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter Winner ID"
+                            value={winnerId}
+                            onChange={(e) => setWinnerId(e.target.value)}
+                            className="bg-dark text-white border-secondary"
+                            disabled={isDraw}
+                        />
+                    </Form.Group>
+                    <div className="text-end">
+                        <Button
+                            onClick={processMatch} // Calls the processMatch function
+                            style={{
+                                backgroundColor: '#e74c3c',
+                                border: 'none',
+                                padding: '0.75rem 1.5rem',
+                                borderRadius: '4px',
+                                fontWeight: '500'
+                            }}
+                        >
+                            Process Match
                         </Button>
                     </div>
                 </Modal.Body>
