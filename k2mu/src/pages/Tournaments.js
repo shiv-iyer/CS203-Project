@@ -176,7 +176,7 @@ export default function Tournaments() {
         const playerId = getPlayerIdFromUsername(username);
         
         try {
-            const response = await axios.post(`http://localhost:8080/tournaments/${tournamentId}/players?playerId=${playerId}`, {}, {
+            const response = await axios.post(IP_ADDRESS + `/tournaments/${tournamentId}/players?playerId=${playerId}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Basic ${encodedCredentials}`

@@ -17,7 +17,7 @@ export default function Match() {
 
     const createMatch = async () => {
         try {
-            const response = await axios.post(`http://localhost:8080/tournament/${tournamentId}/matches`);
+            const response = await axios.post(IP_ADDRESS + `/tournament/${tournamentId}/matches`);
             alert("Match created successfully!");
             console.log(response.data);
             setShowCreateModal(false);
@@ -28,7 +28,7 @@ export default function Match() {
 
     const assignRandomPlayers = async () => {
         try {
-            const response = await axios.put(`http://localhost:8080/tournament/${tournamentId}/matches/${matchId}/random-players`);
+            const response = await axios.put(IP_ADDRESS + `/tournament/${tournamentId}/matches/${matchId}/random-players`);
             alert("Players assigned successfully!");
             console.log(response.data);
             setShowAssignModal(false);
@@ -40,7 +40,7 @@ export default function Match() {
     const processMatch = async () => {
         try {
             const response = await axios.put(
-                `http://localhost:8080/tournament/${tournamentId}/matches/${matchId}/updateresults?isDraw=${isDraw}`,
+                IP_ADDRESS + `/tournament/${tournamentId}/matches/${matchId}/updateresults?isDraw=${isDraw}`,
                 isDraw ? {} : { id: winnerId }, // Only send `id` in the body if `isDraw` is false
                 {
                     headers: {

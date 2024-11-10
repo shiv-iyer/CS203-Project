@@ -28,7 +28,7 @@ export default function Profile() {
 
     const getUser = async (username, encodedCredentials) => {
         try {
-            const response = await axios.get(`http://localhost:8080/players/${username}`, {
+            const response = await axios.get(IP_ADDRESS + `/players/${username}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Basic ${encodedCredentials}`

@@ -25,11 +25,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: k2mu-frontend-service
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: "k2mu-frontend-ip"
 spec:
   type: LoadBalancer
-  loadBalancerIP: "34.144.201.174"  # Your static IP
+  loadBalancerIP: "35.240.208.160"  # Your new regional IP
   ports:
   - port: 80
     targetPort: 3000
