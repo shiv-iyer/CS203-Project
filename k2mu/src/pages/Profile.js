@@ -7,9 +7,11 @@ export default function Profile() {
     // State for our credentials and user data
     const [showCredentialsModal, setShowCredentialsModal] = useState(false);
     const [showProfileModal, setShowProfileModal] = useState(false);
+    const [showUsersModal, setShowUsersModal] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [userData, setUserData] = useState(null); // Store user profile data here
+    const [allUsers, setAllUsers] = useState([]); // Storing all users data here
     
     // Function to show login popup
     const showLoginPopup = () => {
@@ -47,8 +49,8 @@ export default function Profile() {
     const getUsers = async () => {
         try {
             const response = await axios.get('http://localhost:8080/players');
-            console.log("All players:");
-            console.log(response.data);
+            setAllUsers(response.data);
+            setShowUsersModal(true);
         } catch (error) {
             alert("Error fetching players!");
             console.error(error);
@@ -123,6 +125,29 @@ export default function Profile() {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" onClick={() => setShowProfileModal(false)}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Users Modal */}
+                <Modal show={showUsersModal} onHide={() => setShowUsersModal(false)} className="chess-modal">
+                    <Modal.Header closeButton>
+                        <Modal.Title>All Users</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {allUsers.length > 0 ? (
+                            <ListGroup variant="flush">
+                                {allUsers.map((user) => (
+                                    <ListGroup.Item key={user.id}>
+                                        <strong>ID:</strong> {user.id} | <strong>Username:</strong> {user.username}
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        ) : (
+                            <p>No users available</p>
+                        )}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => setShowUsersModal(false)}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             </Container>
