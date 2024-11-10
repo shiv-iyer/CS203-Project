@@ -14,6 +14,7 @@ export default function Tournaments() {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUserTournaments, setShowUserTournaments] = useState(false);
     const [showDeleteTournaments, setShowDeleteTournaments] = useState(false);
+    const [showCredentialsModal, setShowCredentialsModal] = useState(false);
     const [tournaments, setTournaments] = useState([]);  // Store fetched tournaments
     const [error, setError] = useState(null); // Store any error that may occur during the fetch
 
@@ -26,6 +27,12 @@ export default function Tournaments() {
     const [minElo, setMinElo] = useState(1000);
     const [maxElo, setMaxElo] = useState(3500);
     const [registrationCutOff, setRegistrationCutOff] = useState("");
+
+    // Temporary storage for credentials
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [currentAction, setCurrentAction] = useState(""); // Track if creating or joining a tournament
+    const [targetTournamentId, setTargetTournamentId] = useState(null); // Track tournament ID for join action
     
     const fetchTournaments = async () => {
         try {
@@ -38,7 +45,33 @@ export default function Tournaments() {
         }
     };
 
-    const handleCreateTournament = async () => {
+    const handleCredentialsSubmit = async () => {
+        const encodedCredentials = btoa(`${username}:${password}`);
+
+        if (currentAction === "create") {
+            handleCreateTournament(encodedCredentials);
+        } else if (currentAction === "join" && targetTournamentId) {
+            joinTournament(targetTournamentId, encodedCredentials);
+        }
+
+        // Clear credentials and close modal
+        setUsername("");
+        setPassword("");
+        setShowCredentialsModal(false);
+    };
+
+    const handleCreateTournamentClick = () => {
+        setCurrentAction("create");
+        setShowCredentialsModal(true); // Show the modal for credentials input
+    };
+
+    const handleJoinTournamentClick = (tournamentId) => {
+        setCurrentAction("join");
+        setTargetTournamentId(tournamentId);
+        setShowCredentialsModal(true); // Show the modal for credentials input
+    };
+
+    const handleCreateTournament = async (encodedCredentials) => {
         const formattedRegistrationCutOff = registrationCutOff ? `${registrationCutOff}T23:59:59` : "";
 
         const tournamentData = {
@@ -52,9 +85,9 @@ export default function Tournaments() {
             registrationCutOff: formattedRegistrationCutOff
         };
 
-        const username = 'Player1';
-        const password = 'Password1';
-        const encodedCredentials = btoa(`${username}:${password}`);
+        // const username = 'Player1';
+        // const password = 'Password1';
+        // const encodedCredentials = btoa(`${username}:${password}`);
 
         try {
             const response = await axios.post('http://localhost:8080/tournaments', tournamentData, {
@@ -127,11 +160,11 @@ export default function Tournaments() {
         setShowDeleteTournaments(false);
     };
 
-    const joinTournament = async (tournamentId) => {
+    const joinTournament = async (tournamentId, encodedCredentials) => {
 
-        const username = 'Player3';
-        const password = 'Password1@';
-        const encodedCredentials = btoa(`${username}:${password}`);
+        // const username = 'Player3';
+        // const password = 'Password1@';
+        // const encodedCredentials = btoa(`${username}:${password}`);
 
         try {
             const response = await axios.post(`http://localhost:8080/tournaments/${tournamentId}/players?playerId=3`, {}, {
@@ -162,6 +195,29 @@ export default function Tournaments() {
                     <Button variant="danger" onClick={handleDeleteTournament}>Delete Tournament</Button>
                 </div>
 
+                 {/* Credentials Modal */}
+                 <Modal show={showCredentialsModal} onHide={() => setShowCredentialsModal(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Enter Credentials</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group>
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowCredentialsModal(false)}>Cancel</Button>
+                        <Button variant="primary" onClick={handleCredentialsSubmit}>Submit</Button>
+                    </Modal.Footer>
+                </Modal>
+
                 {/* Modal will display our tournaments */}
                 <Modal show={showTournaments} onHide={handleClose} className="basic-modal">
                     <Modal.Header>
@@ -190,7 +246,8 @@ export default function Tournaments() {
                                             <strong>Registered Players:</strong> {tournament.registeredPlayersId.length} <br />
                                             <strong>Rankings:</strong> {tournament.rankings ? tournament.rankings.join(', ') : 'N/A'}
                                         </Card.Text>
-                                        <Button onClick={() => joinTournament(tournament.tournamentId)}>Join</Button>
+                                        <Button onClick={() => handleJoinTournamentClick(tournament.tournamentId)}>Join</Button>
+                                        {/* <Button onClick={() => joinTournament(tournament.tournamentId)}>Join</Button> */}
                                     </Card.Body>
                                 </Card>
                             ))
@@ -288,7 +345,8 @@ export default function Tournaments() {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowCreateModal(false)}>Close</Button>
-                        <Button variant="primary" onClick={handleCreateTournament}>Create Tournament</Button>
+                        {/* <Button variant="primary" onClick={handleCreateTournament}>Create Tournament</Button> */}
+                        <Button variant="primary" onClick={handleCreateTournamentClick}>Create Tournament</Button>
                     </Modal.Footer>
                 </Modal>
 
