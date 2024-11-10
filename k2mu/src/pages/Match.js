@@ -18,6 +18,7 @@ export default function Match() {
     const [showRandomModal, setShowRandomModal] = useState(false);
     const [showOverviewInputModal, setShowOverviewInputModal] = useState(false);
     const [matchOverview, setMatchOverview] = useState([]);
+    const [showOverviewDisplayModal, setShowOverviewDisplayModal] = useState(false);
 
     const createMatch = async () => {
         try {
@@ -86,7 +87,8 @@ export default function Match() {
         try {
             const response = await axios.get(`http://localhost:8080/tournament/${tournamentId}/matches`);
             setMatchOverview(response.data);
-            setShowOverviewInputModal(false); // Close the input modal after fetching data
+            setShowOverviewInputModal(false); // Close the input modal
+            setShowOverviewDisplayModal(true); // Open the display modal
         } catch (error) {
             console.error("Error fetching match overview:", error);
             alert("Failed to fetch match overview.");
@@ -449,6 +451,35 @@ export default function Match() {
                             Get Overview
                         </Button>
                     </div>
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={showOverviewDisplayModal} // Use the new state to show the modal
+                onHide={() => setShowOverviewDisplayModal(false)}
+                centered
+                contentClassName="bg-dark"
+            >
+                <Modal.Header closeButton className="border-0" style={{ backgroundColor: '#2c3e50', color: 'white' }}>
+                    <Modal.Title>Match Overview</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ backgroundColor: '#2c3e50', color: 'white' }}>
+                    {matchOverview.length > 0 ? (
+                        <ul>
+                            {matchOverview.map((match, index) => (
+                                <li key={index} style={{ marginBottom: '10px' }}>
+                                    <strong>Match ID:</strong> {match.id} <br />
+                                    <strong>Player 1 ID:</strong> {match.player1Id ? match.player1Id : 'N/A'} <br />
+                                    <strong>Player 2 ID:</strong> {match.player2Id ? match.player2Id : 'N/A'} <br />
+                                    <strong>Status:</strong> {match.matchStatus} <br />
+                                    <strong>Draw:</strong> {match.draw ? 'Yes' : 'No'} <br />
+                                    <strong>Winner ID:</strong> {match.winnerId ? match.winnerId : 'N/A'}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No matches found for this tournament.</p>
+                    )}
                 </Modal.Body>
             </Modal>
         </Container>
