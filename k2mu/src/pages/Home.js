@@ -10,6 +10,7 @@ export default function Home() {
         <React.Fragment>
             <Container>
                 <div>
+                    <div className="top-header"></div>
                     <h1 className="main-header">Welcome to Knight 2 Meet You!</h1>
                     {<div className="App">
                         <header className="App-header">
