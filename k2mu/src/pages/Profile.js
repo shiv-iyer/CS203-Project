@@ -62,7 +62,7 @@ export default function Profile() {
             <Container className="page-primary main-text">
                 <h1 className="main-header">Profile Page</h1>
                 <div className="button-group">
-                    <Button variant="info" onClick={showLoginPopup}>View User Profile</Button>
+                    <Button variant="info" onClick={showLoginPopup} className="mx-3">View User Profile</Button>
                     <Button variant="success" onClick={getUsers}>View All Users</Button>
                 </div>
 
