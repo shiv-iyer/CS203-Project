@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Card, Container, Button, ListGroup, Modal, Form } from "react-bootstrap";
+import { Container, Button, Modal, Form, ListGroup } from "react-bootstrap";
 import axios from 'axios';
-
-// import styles
 import "../styles.css";
 
 export default function Profile() {
-
-    // state for our credentials
+    // State for our credentials and user data
     const [showCredentialsModal, setShowCredentialsModal] = useState(false);
+    const [showProfileModal, setShowProfileModal] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [userData, setUserData] = useState(null); // Store user profile data here
     
+    // Function to show login popup
     const showLoginPopup = () => {
         setShowCredentialsModal(true);
-    }
+    };
 
+    // Handle credentials submission
     const handleCredentialsSubmit = async () => {
         const encodedCredentials = btoa(`${username}:${password}`);
-        getUser(username, encodedCredentials)
+        getUser(username, encodedCredentials);
 
         // Clear credentials and close modal
         setUsername("");
@@ -26,6 +27,7 @@ export default function Profile() {
         setShowCredentialsModal(false);
     };
 
+    // Fetch a single user's data
     const getUser = async (username, encodedCredentials) => {
         try {
             const response = await axios.get(`http://localhost:8080/players/${username}`, {
@@ -34,12 +36,13 @@ export default function Profile() {
                     'Authorization': `Basic ${encodedCredentials}`
                 }
             });
-            console.log(response.data);
+            setUserData(response.data); // Store the response data in userData
+            setShowProfileModal(true);
         } catch (error) {
             alert("Error retrieving player information!");
             console.error(error);
         }
-    }
+    };
 
     const getUsers = async () => {
         try {
@@ -50,7 +53,7 @@ export default function Profile() {
             alert("Error fetching players!");
             console.error(error);
         }
-    }
+    };
 
     return (
         <React.Fragment>
@@ -84,7 +87,45 @@ export default function Profile() {
                     </Modal.Footer>
                 </Modal>
                 
+                {/* Profile Modal */}
+                <Modal show={showProfileModal} onHide={() => setShowProfileModal(false)} className="chess-modal">
+                    <Modal.Header closeButton>
+                        <Modal.Title>User Profile</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {userData ? (
+                            <ListGroup variant="flush">
+                                <ListGroup.Item>
+                                    <strong>Username:</strong> {userData.username}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Email:</strong> {userData.email}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Verified:</strong> {userData.enabled ? "Yes" : "No"}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Global Elo Rating:</strong> {userData.globalEloRating}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Authorities:</strong> {userData.authorities}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Tournaments Registered:</strong> {userData.tournamentRegisteredIds.join(", ")}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Match History IDs:</strong> {userData.matchHistoryIds.join(", ")}
+                                </ListGroup.Item>
+                            </ListGroup>
+                        ) : (
+                            <p>No user data available</p>
+                        )}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => setShowProfileModal(false)}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
             </Container>
         </React.Fragment>
-    )
+    );
 }
