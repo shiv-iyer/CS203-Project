@@ -196,7 +196,7 @@ export default function Tournaments() {
                 </div>
 
                  {/* Credentials Modal */}
-                 <Modal show={showCredentialsModal} onHide={() => setShowCredentialsModal(false)}>
+                 <Modal show={showCredentialsModal} onHide={() => setShowCredentialsModal(false)} className="chess-modal">
                     <Modal.Header closeButton>
                         <Modal.Title>Enter Credentials</Modal.Title>
                     </Modal.Header>
@@ -283,7 +283,7 @@ export default function Tournaments() {
                 </Modal>
 
                 {/* Now for creating Tournaments */}
-                <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} className="create-tournament-modal">
+                <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} className="chess-modal">
                     <Modal.Header closeButton>
                         <Modal.Title>Create Tournament</Modal.Title>
                     </Modal.Header>
