@@ -1,5 +1,7 @@
 # CS203-Project
-front end website for our CS203 project
+The FrontEnd website for our CS203: Collaborative Software Development project. This is linked to our BackEnd project, which features a RESTful API with Controllers, Services and Repositories.
+
+[BackEnd Repository Link](https://github.com/reiwening/Knight2MeetYouGitHub)
 
 ## Features
 
