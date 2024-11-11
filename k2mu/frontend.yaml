@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
       - name: k2mu-frontend
-        image: matthewngzc/k2mu:fr2.0
+        image: matthewngzc/k2mu:fr2.1
         ports:
         - containerPort: 3000
         env:
         - name: REACT_APP_API_URL
-          value: "http://34.132.121.163"
+          value: "http://34.55.43.10"
 ---
 apiVersion: v1
 kind: Service

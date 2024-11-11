@@ -16,7 +16,7 @@ export default function Chatbot() {
         }
 
         try {
-            const res = await axios.post("http://34.27.122.159:80/chess/advice", {
+            const res = await axios.post("http://35.239.255.119:80/chess/advice", {
                 userInput,
                 personality
             });
