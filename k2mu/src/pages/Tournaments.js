@@ -45,6 +45,12 @@ export default function Tournaments() {
         }
     };
 
+    // retrieve the playerID from the username
+    const getPlayerIdFromUsername = (username) => {
+        // extract the number at the end of "PlayerX"
+        return username.match(/\d+$/)?.[0] || "";
+    };
+
     const handleCredentialsSubmit = async () => {
         const encodedCredentials = btoa(`${username}:${password}`);
 
@@ -166,8 +172,10 @@ export default function Tournaments() {
         // const password = 'Password1@';
         // const encodedCredentials = btoa(`${username}:${password}`);
 
+        const playerId = getPlayerIdFromUsername(username);
+        
         try {
-            const response = await axios.post(`http://localhost:8080/tournaments/${tournamentId}/players?playerId=3`, {}, {
+            const response = await axios.post(`http://localhost:8080/tournaments/${tournamentId}/players?playerId=${playerId}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Basic ${encodedCredentials}`

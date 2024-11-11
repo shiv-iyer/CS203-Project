@@ -17,10 +17,10 @@ import Main from "./Main";
 
 // my own pages and components
 import Home from "./pages/Home";
-import Testing from "./pages/Testing";
 import Tournaments from "./pages/Tournaments";
 import User from "./pages/User";
 import Match from "./pages/Match";
+import Profile from "./pages/Profile";
 
 // stylesheet
 import "./styles.css";
@@ -50,7 +50,7 @@ function App() {
                 <NavLink className="nav-link" activeClassName="active" to="/tournaments">Tournaments</NavLink>
                 <NavLink className="nav-link" activeClassName="active" to="/user">User</NavLink>
                 <NavLink className="nav-link" activeClassName="active" to="/match">Match</NavLink>
-                <NavLink className="nav-link" activeClassName="active" to="/test">Testing</NavLink>
+                <NavLink className="nav-link" activeClassName="active" to="/profile">Profile</NavLink>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -66,8 +66,8 @@ function App() {
           <Route path="/user" element={<User/>}></Route>
           {/* Match page */}
           <Route path="/match" element={<Match/>}></Route>
-          {/* For my testing purposes */}
-          <Route path="/test" element={<Testing/>}></Route>
+          {/* Profile page */}
+          <Route path="/profile" element={<Profile/>}></Route>
         </Routes>
       </Router>
       <Chatbot />

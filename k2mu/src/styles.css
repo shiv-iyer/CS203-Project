@@ -227,3 +227,9 @@
     border: 1px solid #333;
     color: #333;
 }
+
+.top-header {
+    height: 7px;
+    background-color: #000;
+    margin: 10px 0; 
+}
