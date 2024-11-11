@@ -361,7 +361,7 @@ export default function Tournaments() {
                 {/* Lastly, deleting tournaments*/}
                 <Modal show={showDeleteTournaments} onHide={handleDeleteClose} className="basic-modal">
                     <Modal.Header>
-                        <Modal.Title>Available Tournaments</Modal.Title>
+                        <Modal.Title>Deleting Tournaments</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{maxHeight: "400px", overflowY: "scroll"}}>
                         {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error if any */}
